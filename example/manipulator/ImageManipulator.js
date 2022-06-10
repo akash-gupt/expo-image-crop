@@ -61,15 +61,12 @@ class ExpoImageManipulator extends Component {
         }
     }
 
+    async componentDidMount() {
+        await this.onConvertImageToEditableSize()
 
-    componentDidUpdate() {
         this.setState({
             cropMode: true,
         })
-    }
-
-    async componentDidMount() {
-        await this.onConvertImageToEditableSize()
     }
 
     onGetCorrectSizes = (w, h) => {
