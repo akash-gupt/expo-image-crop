@@ -31,11 +31,14 @@ YellowBox.ignoreWarnings([
 class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            cropMode: false,
-            processing: false,
-            zoomScale: 1,
-        }
+
+        setTimeout(() => {
+            this.state = {
+                cropMode: true,
+                processing: false,
+                zoomScale: 1,
+            }
+        }, 2000)
 
         this.scrollOffset = 0
 
