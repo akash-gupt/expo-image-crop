@@ -208,18 +208,6 @@ class ExpoImageManipulator extends Component {
         }
     };
 
-    // calculateMaxSizes = (event) => {
-    //     const { fixedSquareAspect } = this.state
-    //     let w1 = event.nativeEvent.layout.width || 100
-    //     let h1 = event.nativeEvent.layout.height || 100
-    //     if (fixedSquareAspect) {
-    //         if (w1 < h1) h1 = w1
-    //         else w1 = h1
-    //     }
-    //     this.maxSizes.width = w1
-    //     this.maxSizes.height = h1
-    // };
-
     // eslint-disable-next-line camelcase
     async UNSAFE_componentWillReceiveProps() {
         await this.onConvertImageToEditableSize()
@@ -278,14 +266,12 @@ class ExpoImageManipulator extends Component {
                         width, flexDirection: 'row', backgroundColor: 'black', justifyContent: 'space-between',
                     }}
                 >
-                    <ScrollView scrollEnabled={false}
+                    {/* <ScrollView scrollEnabled={false}
                         horizontal
                         contentContainerStyle={{
                             width: '100%', paddingHorizontal: 15, height: 44, alignItems: 'center',
                         }}
                     >
-
-                        {/* {this.props?.renderHeader && this.props?.renderHeader()} */}
 
                         {!cropMode
                             ? (
@@ -330,7 +316,7 @@ class ExpoImageManipulator extends Component {
                                 </View>
                             )
                         }
-                    </ScrollView>
+                    </ScrollView> */}
                 </SafeAreaView>
                 <View style={{ flex: 1, backgroundColor: 'black', width: Dimensions.get('window').width }}>
                     <ScrollView
