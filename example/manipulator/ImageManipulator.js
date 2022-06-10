@@ -250,6 +250,7 @@ class ExpoImageManipulator extends Component {
             borderColor,
             fixedMask,
             ratio,
+            footerHeight,
         } = this.props
         const {
             uri,
@@ -299,47 +300,33 @@ class ExpoImageManipulator extends Component {
 
                 </SafeAreaView>
                 <View style={{ flex: 1, backgroundColor: 'black', width: Dimensions.get('window').width }}>
-                    <ScrollView
-                        style={{ position: 'relative', flex: 1 }}
-                        contentContainerStyle={{ backgroundColor: 'black', flex: 1, justifyContent: 'center' }}
-                        maximumZoomScale={5}
-                        minimumZoomScale={0.5}
-                        onScroll={this.onHandleScroll}
-                        bounces={false}
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        ref={(c) => { this.scrollView = c }}
-                        scrollEventThrottle={16}
-                        scrollEnabled={false}
-                        pinchGestureEnabled={false}
-                    >
-                        <AutoHeightImage
-                            style={{ backgroundColor: 'black' }}
-                            source={{ uri }}
-                            resizeMode={imageRatio >= 1 ? 'contain' : 'contain'}
-                            width={width}
-                            height={originalHeight}
+
+                    <AutoHeightImage
+                        style={{ backgroundColor: 'black' }}
+                        source={{ uri }}
+                        resizeMode={imageRatio >= 1 ? 'contain' : 'contain'}
+                        width={width}
+                        height={originalHeight - footerHeight}
+                    />
+                    {!!cropMode && (
+                        <ImageCropOverlay
+                            onLayoutChanged={(top, left, w, height) => {
+                                this.currentSize.width = w
+                                this.currentSize.height = height
+                                this.currentPos.top = top
+                                this.currentPos.left = left
+                            }}
+                            initialWidth={(fixedMask && fixedMask.width) || cropWidth}
+                            initialHeight={(fixedMask && fixedMask.height) || cropHeight - footerHeight}
+                            initialTop={cropInitialTop}
+                            initialLeft={cropInitialLeft}
+                            minHeight={(fixedMask && fixedMask.height) || 100}
+                            minWidth={(fixedMask && fixedMask.width) || 100}
+                            borderColor={borderColor}
+                            ratio={ratio || { ratio: { height: null, width: null } }}
                         />
-                        {!!cropMode && (
-                            <ImageCropOverlay
-                                onLayoutChanged={(top, left, w, height) => {
-                                    this.currentSize.width = w
-                                    this.currentSize.height = height
-                                    this.currentPos.top = top
-                                    this.currentPos.left = left
-                                }}
-                                initialWidth={(fixedMask && fixedMask.width) || cropWidth}
-                                initialHeight={(fixedMask && fixedMask.height) || cropHeight}
-                                initialTop={cropInitialTop}
-                                initialLeft={cropInitialLeft}
-                                minHeight={(fixedMask && fixedMask.height) || 100}
-                                minWidth={(fixedMask && fixedMask.width) || 100}
-                                borderColor={borderColor}
-                                ratio={ratio || { ratio: { height: null, width: null } }}
-                            />
-                        )
-                        }
-                    </ScrollView>
+                    )
+                    }
 
                     <SafeAreaView>
                         {this.props?.renderFooter && this.props.renderFooter({ onCropImage: this.onCropImage })}
@@ -354,7 +341,7 @@ export default ExpoImageManipulator
 
 ExpoImageManipulator.defaultProps = {
     onPictureChoosed: ({ uri, base64 }) => console.log('URI:', uri, base64),
-    borderColor: '#a4a4a4',
+    borderColor: 'white',
     btnTexts: {
         crop: 'Crop',
         rotate: 'Rotate',
@@ -367,6 +354,7 @@ ExpoImageManipulator.defaultProps = {
         base64: false,
     },
     fixedMask: null,
+    footerHeight: 0,
 }
 
 ExpoImageManipulator.propTypes = {
@@ -379,4 +367,5 @@ ExpoImageManipulator.propTypes = {
     photo: PropTypes.object.isRequired,
     onToggleModal: PropTypes.func.isRequired,
     ratio: PropTypes.object,
+    footerHeight: PropTypes.number,
 }

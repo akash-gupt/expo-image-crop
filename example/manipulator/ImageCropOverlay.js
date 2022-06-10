@@ -45,8 +45,8 @@ class ImageCropOverlay extends React.Component {
         style.width = initialWidth + ((draggingTL || draggingML || draggingBL) ? -offsetLeft : (draggingTM || draggingMM || draggingBM) ? 0 : offsetLeft)
         style.height = initialHeight + ((draggingTL || draggingTM || draggingTR) ? -offsetTop : (draggingML || draggingMM || draggingMR) ? 0 : offsetTop)
 
-        //If ratio specified, modify width and height to maintain ratio
-        if ( ratio && ratio.height && ratio.width) {
+        // If ratio specified, modify width and height to maintain ratio
+        if (ratio && ratio.height && ratio.width) {
             if (style.width * ratio.width > style.height * ratio.height) {
                 style.height = style.width * (ratio.height / ratio.width)
             }
@@ -71,125 +71,17 @@ class ImageCropOverlay extends React.Component {
         return (
             <View {...this.panResponder.panHandlers}
                 style={[{
-                    flex: 1, justifyContent: 'center', alignItems: 'center', position: 'absolute', borderStyle: 'solid', borderWidth: 2, borderColor, backgroundColor: 'rgb(0,0,0,0.5)',
+                    borderRadius: 25,
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    borderStyle: 'solid',
+                    borderWidth: 5,
+                    borderColor,
+                    backgroundColor: 'rgb(0,0,0,0.5)',
                 }, style]}
-            >
-                <View style={{
-                    flexDirection: 'row', width: '100%', flex: 1 / 3, backgroundColor: 'transparent',
-                }}
-                >
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingTL ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingTM ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingTR ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                </View>
-                <View style={{
-                    flexDirection: 'row', width: '100%', flex: 1 / 3, backgroundColor: 'transparent',
-                }}
-                >
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingML ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingMM ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingMR ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                </View>
-                <View style={{
-                    flexDirection: 'row', width: '100%', flex: 1 / 3, backgroundColor: 'transparent',
-                }}
-                >
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingBL ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingBM ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                    <View style={{
-                        borderColor, borderWidth: 0, backgroundColor: draggingBR ? 'transparent' : 'transparent', flex: 1 / 3, height: '100%',
-                    }}
-                    />
-                </View>
-                <View style={{
-                    top: 0, left: 0, width: '100%', height: '100%', position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                }}
-                >
-                    <View style={{ flex: 1 / 3, flexDirection: 'row' }}>
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        >
-                            <View style={{
-                                position: 'absolute', left: 5, top: 5, borderLeftWidth: 2, borderTopWidth: 2, height: 48, width: 48, borderColor: '#f4f4f4', borderStyle: 'solid',
-                            }}
-                            />
-                        </View>
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        />
-                        <View style={{
-                            flex: 3, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        >
-                            <View style={{
-                                position: 'absolute', right: 5, top: 5, borderRightWidth: 2, borderTopWidth: 2, height: 48, width: 48, borderColor: '#f4f4f4', borderStyle: 'solid',
-                            }}
-                            />
-                        </View>
-                    </View>
-                    <View style={{ flex: 1 / 3, flexDirection: 'row' }}>
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        />
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        />
-                        <View style={{
-                            flex: 3, borderBottomWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        />
-                    </View>
-                    <View style={{ flex: 1 / 3, flexDirection: 'row' }}>
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid', position: 'relative',
-                        }}
-                        >
-                            <View style={{
-                                position: 'absolute', left: 5, bottom: 5, borderLeftWidth: 2, borderBottomWidth: 2, height: 48, width: 48, borderColor: '#f4f4f4', borderStyle: 'solid',
-                            }}
-                            />
-                        </View>
-                        <View style={{
-                            flex: 3, borderRightWidth: 1, borderColor: '#c9c9c9', borderStyle: 'solid',
-                        }}
-                        />
-                        <View style={{ flex: 3, position: 'relative' }}>
-                            <View style={{
-                                position: 'absolute', right: 5, bottom: 5, borderRightWidth: 2, borderBottomWidth: 2, height: 48, width: 48, borderColor: '#f4f4f4', borderStyle: 'solid',
-                            }}
-                            />
-                        </View>
-                    </View>
-                </View>
-            </View>
+            />
         )
     }
 
@@ -286,7 +178,7 @@ class ImageCropOverlay extends React.Component {
         state.initialWidth = initialWidth + ((draggingTL || draggingML || draggingBL) ? -gestureState.dx : (draggingTM || draggingMM || draggingBM) ? 0 : gestureState.dx)
         state.initialHeight = initialHeight + ((draggingTL || draggingTM || draggingTR) ? -gestureState.dy : (draggingML || draggingMM || draggingMR) ? 0 : gestureState.dy)
 
-        if ( ratio && ratio.height && ratio.width) {
+        if (ratio && ratio.height && ratio.width) {
             if (state.initialWidth * ratio.width > state.initialHeight * ratio.height) {
                 state.initialHeight = state.initialWidth * (ratio.height / ratio.width)
             }
