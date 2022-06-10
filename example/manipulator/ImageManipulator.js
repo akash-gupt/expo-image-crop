@@ -32,7 +32,7 @@ class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cropMode: false,
+            cropMode: true,
             processing: false,
             zoomScale: 1,
         }
@@ -225,14 +225,6 @@ class ExpoImageManipulator extends Component {
         await this.onConvertImageToEditableSize()
     }
 
-    zoomImage() {
-        // this.refs.imageScrollView.zoomScale = 5
-        // this.setState({width: width})
-        // this.setState({zoomScale: 5})
-
-        // this.setState(curHeight)
-    }
-
     render() {
         const {
             isVisible,
@@ -292,6 +284,9 @@ class ExpoImageManipulator extends Component {
                             width: '100%', paddingHorizontal: 15, height: 44, alignItems: 'center',
                         }}
                     >
+
+                        {this.props.renderHeader && this.props.renderHeader()}
+
                         {!cropMode
                             ? (
                                 <View style={{ flexDirection: 'row' }}>
