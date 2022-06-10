@@ -285,7 +285,7 @@ class ExpoImageManipulator extends Component {
                         }}
                     >
 
-                        {this.props?.renderHeader && this.props?.renderHeader()}
+                        {/* {this.props?.renderHeader && this.props?.renderHeader()} */}
 
                         {!cropMode
                             ? (
