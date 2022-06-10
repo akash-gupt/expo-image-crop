@@ -298,15 +298,15 @@ class ExpoImageManipulator extends Component {
                         width, flexDirection: 'row', backgroundColor: 'black', justifyContent: 'space-between',
                     }}
                 >
-                    <ScrollView scrollEnabled={false}
+
+                    {this.props?.renderHeader && this.props.renderHeader({ onToggleModal: this.onToggleModal })}
+
+                    {/* <ScrollView scrollEnabled={false}
                         horizontal
                         contentContainerStyle={{
                             width: '100%', paddingHorizontal: 15, height: 44, alignItems: 'center',
                         }}
                     >
-
-                        {this.props?.renderHeader && this.props.renderHeader({ onToggleModal })}
-
                         {!cropMode
                             ? (
                                 <View style={{ flexDirection: 'row' }}>
@@ -350,7 +350,7 @@ class ExpoImageManipulator extends Component {
                                 </View>
                             )
                         }
-                    </ScrollView>
+                    </ScrollView> */}
                 </SafeAreaView>
                 <View style={{ flex: 1, backgroundColor: 'black', width: Dimensions.get('window').width }}>
                     <ScrollView
@@ -394,6 +394,8 @@ class ExpoImageManipulator extends Component {
                         )
                         }
                     </ScrollView>
+
+                    {this.props?.renderFooter && this.props.renderFooter({ onCropImage: this.onCropImage })}
                 </View>
             </Modal>
         )
