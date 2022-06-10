@@ -304,6 +304,9 @@ class ExpoImageManipulator extends Component {
                             width: '100%', paddingHorizontal: 15, height: 44, alignItems: 'center',
                         }}
                     >
+
+                        {this.props?.renderHeader && this.props.renderHeader({ onToggleModal })}
+
                         {!cropMode
                             ? (
                                 <View style={{ flexDirection: 'row' }}>
