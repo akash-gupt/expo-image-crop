@@ -32,7 +32,7 @@ class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cropMode: false,
+            cropMode: true,
             processing: false,
             zoomScale: 1,
         }
@@ -292,8 +292,8 @@ class ExpoImageManipulator extends Component {
             isVisible,
             onPictureChoosed,
             borderColor,
-            allowRotate = true,
-            allowFlip = true,
+            allowRotate = false,
+            allowFlip = false,
             btnTexts,
             fixedMask,
             ratio,
