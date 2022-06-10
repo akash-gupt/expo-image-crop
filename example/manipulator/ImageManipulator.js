@@ -64,9 +64,9 @@ class ExpoImageManipulator extends Component {
     async componentDidMount() {
         await this.onConvertImageToEditableSize()
 
-        this.setState({
-            cropMode: true,
-        })
+        //   setTimeout(() => {
+
+    //   }, 5000);
     }
 
     onGetCorrectSizes = (w, h) => {
@@ -98,6 +98,11 @@ class ExpoImageManipulator extends Component {
             })
             this.actualSize.width = w
             this.actualSize.height = height
+
+            // enable crop by default
+            this.setState({
+                cropMode: true,
+            })
         })
     }
 
@@ -139,38 +144,6 @@ class ExpoImageManipulator extends Component {
             } else {
                 this.setState({ cropMode: false, processing: false })
             }
-        })
-    }
-
-    onRotateImage = async () => {
-        const { uri } = this.state
-        let uriToCrop = uri
-        if (this.isRemote) {
-            const response = await FileSystem.downloadAsync(
-                uri,
-                FileSystem.documentDirectory + 'image',
-            )
-            uriToCrop = response.uri
-        }
-        Image.getSize(uri, async (width2, height2) => {
-            const { uri: rotUri, base64 } = await this.rotate(uriToCrop, width2, height2)
-            this.setState({ uri: rotUri, base64 })
-        })
-    }
-
-    onFlipImage = async (orientation) => {
-        const { uri } = this.state
-        let uriToCrop = uri
-        if (this.isRemote) {
-            const response = await FileSystem.downloadAsync(
-                uri,
-                FileSystem.documentDirectory + 'image',
-            )
-            uriToCrop = response.uri
-        }
-        Image.getSize(uri, async () => {
-            const { uri: rotUri, base64 } = await this.filp(uriToCrop, orientation)
-            this.setState({ uri: rotUri, base64 })
         })
     }
 
@@ -225,28 +198,6 @@ class ExpoImageManipulator extends Component {
             }
         }
         return intersectAreaObj
-    }
-
-    filp = async (uri, orientation) => {
-        const { saveOptions } = this.props
-        const manipResult = await ImageManipulator.manipulateAsync(uri, [{
-            flip: orientation === 'vertical' ? ImageManipulator.FlipType.Vertical : ImageManipulator.FlipType.Horizontal,
-        }],
-        saveOptions)
-        return manipResult
-    };
-
-    rotate = async (uri, width2) => {
-        const { saveOptions } = this.props
-        const manipResult = await ImageManipulator.manipulateAsync(uri, [{
-            rotate: -90,
-        }, {
-            resize: {
-                width: this.trueWidth || width2,
-                // height: this.trueHeight || height2,
-            },
-        }], saveOptions)
-        return manipResult
     }
 
     crop = async (cropObj, uri) => {
@@ -371,50 +322,6 @@ class ExpoImageManipulator extends Component {
                                         >
                                             <Icon size={20} name="crop" color="white" />
                                         </TouchableOpacity>
-                                        {
-                                            allowRotate
-                                            && (
-                                                <View style={{ flexDirection: 'row' }}>
-
-                                                    <TouchableOpacity onPress={() => this.onRotateImage()}
-                                                        style={{
-                                                            marginLeft: 10, width: 32, height: 32, alignItems: 'center', justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        <Icon size={20} name="rotate-left" color="white" />
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity onPress={() => this.onFlipImage('vertical')}
-                                                        style={{
-                                                            marginLeft: 10, width: 32, height: 32, alignItems: 'center', justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        <MaterialIcon style={{ transform: [{ rotate: '270deg' }] }} size={20} name="flip" color="white" />
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )
-                                        }
-                                        {
-                                            allowFlip
-                                            && (
-                                                <View style={{ flexDirection: 'row' }}>
-
-                                                    <TouchableOpacity onPress={() => this.onFlipImage('horizontal')}
-                                                        style={{
-                                                            marginLeft: 10, width: 32, height: 32, alignItems: 'center', justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        <MaterialIcon size={20} name="flip" color="white" />
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity onPress={() => { onPictureChoosed({ uri, base64 }); this.onToggleModal() }}
-                                                        style={{
-                                                            marginLeft: 10, width: 60, height: 32, alignItems: 'center', justifyContent: 'center',
-                                                        }}
-                                                    >
-                                                        <Text style={{ fontWeight: '500', color: 'white', fontSize: 18 }}>{btnTexts.done}</Text>
-                                                    </TouchableOpacity>
-                                                </View>
-                                            )
-                                        }
                                     </View>
                                 </View>
                             )
