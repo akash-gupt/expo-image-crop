@@ -32,7 +32,7 @@ class ExpoImageManipulator extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cropMode: true,
+            cropMode: false,
             processing: false,
             zoomScale: 1,
         }
