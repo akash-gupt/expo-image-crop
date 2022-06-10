@@ -61,6 +61,13 @@ class ExpoImageManipulator extends Component {
         }
     }
 
+
+    componentDidUpdate() {
+        this.setState({
+            cropMode: true,
+        })
+    }
+
     async componentDidMount() {
         await this.onConvertImageToEditableSize()
     }
@@ -452,8 +459,6 @@ class ExpoImageManipulator extends Component {
                         scrollEventThrottle={16}
                         scrollEnabled={false}
                         pinchGestureEnabled={false}
-                        // scrollEnabled={cropMode ? false : true}
-                        // pinchGestureEnabled={cropMode ? false : pinchGestureEnabled}
                     >
                         <AutoHeightImage
                             style={{ backgroundColor: 'black' }}
@@ -461,7 +466,6 @@ class ExpoImageManipulator extends Component {
                             resizeMode={imageRatio >= 1 ? 'contain' : 'contain'}
                             width={width}
                             height={originalHeight}
-                            // onLayout={this.calculateMaxSizes}
                         />
                         {!!cropMode && (
                             <ImageCropOverlay
