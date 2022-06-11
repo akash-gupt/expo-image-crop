@@ -17,6 +17,7 @@ import AutoHeightImage from 'react-native-auto-height-image'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import { isIphoneX } from 'react-native-iphone-x-helper'
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView'
 import ImageCropOverlay from './ImageCropOverlay'
 
 const { width } = Dimensions.get('window')
@@ -141,6 +142,8 @@ class ExpoImageManipulator extends Component {
                 this.setState({
                     uri: uriCroped, base64, cropMode: false, processing: false,
                 })
+
+                this.props.onPictureChoosed(uri)
             } else {
                 this.setState({ cropMode: false, processing: false })
             }
@@ -300,7 +303,6 @@ class ExpoImageManipulator extends Component {
 
                 </SafeAreaView>
                 <View style={{ flex: 1, backgroundColor: 'black', width: Dimensions.get('window').width }}>
-
                     <AutoHeightImage
                         style={{ backgroundColor: 'black' }}
                         source={{ uri }}
@@ -308,24 +310,25 @@ class ExpoImageManipulator extends Component {
                         width={width}
                         height={originalHeight - footerHeight}
                     />
-                    {!!cropMode && (
-                        <ImageCropOverlay
-                            onLayoutChanged={(top, left, w, height) => {
-                                this.currentSize.width = w
-                                this.currentSize.height = height
-                                this.currentPos.top = top
-                                this.currentPos.left = left
-                            }}
-                            initialWidth={(fixedMask && fixedMask.width) || cropWidth}
-                            initialHeight={(fixedMask && fixedMask.height) || cropHeight - footerHeight}
-                            initialTop={cropInitialTop}
-                            initialLeft={cropInitialLeft}
-                            minHeight={(fixedMask && fixedMask.height) || 100}
-                            minWidth={(fixedMask && fixedMask.width) || 100}
-                            borderColor={borderColor}
-                            ratio={ratio || { ratio: { height: null, width: null } }}
-                        />
-                    )
+                    {!!cropMode
+                            && (
+                                <ImageCropOverlay
+                                    onLayoutChanged={(top, left, w, height) => {
+                                        this.currentSize.width = w
+                                        this.currentSize.height = height
+                                        this.currentPos.top = top
+                                        this.currentPos.left = left
+                                    }}
+                                    initialWidth={(fixedMask && fixedMask.width) || cropWidth}
+                                    initialHeight={(fixedMask && fixedMask.height) || cropHeight - footerHeight}
+                                    initialTop={cropInitialTop}
+                                    initialLeft={cropInitialLeft}
+                                    minHeight={(fixedMask && fixedMask.height) || 100}
+                                    minWidth={(fixedMask && fixedMask.width) || 100}
+                                    borderColor={borderColor}
+                                    ratio={ratio || { ratio: { height: null, width: null } }}
+                                />
+                            )
                     }
 
                     <SafeAreaView>
